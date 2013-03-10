@@ -3,6 +3,12 @@
 require 'nokogiri'
 require 'open-uri'
 
+class OFTask
+  def initialize(title)
+    `of new Papers \"#{title}\"`
+  end
+end
+
 class SSRNImporter
   SSRN_BASE_URL = "http://ssrn.com/abstract="
 
@@ -48,6 +54,7 @@ class SSRNImporter
       md[:title] :
       md[:title].gsub!(/[^0-9A-Za-z\-]/, '-')
 
+    OFTask.new md[:title]
     File.rename(filename, new_title + ".pdf")
   end
 
