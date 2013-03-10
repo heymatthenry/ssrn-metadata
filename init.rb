@@ -22,7 +22,7 @@ class SSRNImporter
       end
     else
       Dir.glob('*')
-    end.find_all { |f| f.match /^SSRN.+\.pdf$/ }
+    end.find_all { |f| f.match /^SSRN.+\.pdf$/i }
   end
 
   def get_metadata(filename)
