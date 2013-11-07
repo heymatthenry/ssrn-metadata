@@ -40,7 +40,7 @@ class SSRNImporter
       md[:authors] << a.text().strip || ""
     end
 
-    md[:keywords] = ssrn_page.xpath("//b[contains(., 'Keywords:')]/following-sibling::text()").text().strip || ""
+    md[:keywords] = ssrn_page.xpath("//b[contains(., 'Keywords:')]/following-sibling::text()").text().strip.gsub(", ",",").gsub(" ", "-") || ""
 
     set_metadata md
 
@@ -54,7 +54,7 @@ class SSRNImporter
   def set_metadata(md)
     `xattr -w "com.apple.metadata:kMDItemTitle" "#{md[:title]}" #{md[:filename]}`
     `xattr -w "com.apple.metadata:kMDItemAuthors" "#{md[:authors].join(", ")}" #{md[:filename]}`
-    `xattr -w "com.apple.metadata:kMDItemKeywords" "#{md[:keywords]}" #{md[:filename]}`
+    `tag --add #{md[:keywords]} #{md[:filename]}`
   end
 end
 
