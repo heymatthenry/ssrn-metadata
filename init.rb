@@ -54,7 +54,7 @@ class SSRNImporter
   def set_metadata(md)
     `xattr -w "com.apple.metadata:kMDItemTitle" "#{md[:title]}" #{md[:filename]}`
     `xattr -w "com.apple.metadata:kMDItemAuthors" "#{md[:authors].join(", ")}" #{md[:filename]}`
-    `tag --add #{md[:keywords]} #{md[:filename]}`
+    `/usr/local/bin/tag --add #{md[:keywords]} #{md[:filename]}`
   end
 end
 
